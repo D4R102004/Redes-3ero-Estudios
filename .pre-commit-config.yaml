@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.10.0   # ajusta a la última estable
+    hooks:
+      - id: black
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.0    # ajusta a la última estable
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+
+  # - repo: https://github.com/commitizen-tools/commitizen
+  #   rev: v3.27.0   # ajusta a la última estable
+  #   hooks:
+  #     - id: commitizen
+  #       stages: [commit-msg]
+
+
