@@ -1,16 +1,181 @@
-[tool.black]
-line-length = 88
-target-version = ["py311"]
+# =============================================================================
+# CONFIGURACIÓN DEL PROYECTO - Redes de Computadoras 2025
+# =============================================================================
+# Este archivo configura todas las herramientas de desarrollo del proyecto.
+# Es como el "manual de instrucciones" para mantener el código de alta calidad.
+
+[project]
+name = "redes-computadoras-estudios"
+version = "0.1.0"
+description = "Curso completo de Redes de Computadoras con enfoque práctico y pedagógico"
+authors = [
+    {name = "Tu Nombre", email = "tu.email@example.com"}
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+# Dependencias principales del proyecto
+dependencies = [
+    "rich>=13.7.0",      # Para salidas bonitas en terminal
+    "typer>=0.9.0",      # Para crear CLIs amigables
+]
+
+# Dependencias solo para desarrollo (no necesarias en producción)
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=7.4.0",           # Framework de testing
+    "pytest-cov>=4.1.0",       # Medición de cobertura de tests
+    "pytest-mock>=3.12.0",     # Mocks para testing
+
+    # Linting y formateo
+    "ruff>=0.1.0",             # Linter y formateador moderno (reemplaza flake8, isort, etc)
+    "mypy>=1.7.0",             # Type checking estático
+
+    # Seguridad
+    "bandit>=1.7.5",           # Detección de vulnerabilidades
+
+    # Desarrollo
+    "ipython>=8.18.0",         # Shell interactivo mejorado
+    "pre-commit>=3.5.0",       # Hooks de Git automáticos
+
+    # Documentación
+    "mkdocs>=1.5.0",                    # Generador de sitios de documentación
+    "mkdocs-material>=9.5.0",           # Tema Material para MkDocs
+    "mkdocstrings[python]>=0.24.0",     # Generación automática de docs desde código
+    "pymdown-extensions>=10.7.0",       # Extensiones markdown adicionales
+]
+
+# =============================================================================
+# CONFIGURACIÓN DE RUFF - Linter y Formateador
+# =============================================================================
+# Ruff es una herramienta moderna que reemplaza a: flake8, isort, black, etc.
 
 [tool.ruff]
-line-length = 88
-target-version = "py311"
-select = ["E", "F", "I"]  # errores, fallos, imports
-ignore = []
+line-length = 88  # Máximo 88 caracteres por línea (estándar de Python)
+target-version = "py311"  # Versión de Python objetivo
+
+# Reglas activas (cada letra representa un conjunto de reglas)
+select = [
+    "E",   # pycodestyle errores
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (errores de sintaxis, variables no usadas, etc)
+    "I",   # isort (orden de imports)
+    "N",   # pep8-naming (convenciones de nombres)
+    "D",   # pydocstyle (docstrings)
+    "UP",  # pyupgrade (modernización de código)
+    "B",   # flake8-bugbear (errores comunes)
+    "C4",  # flake8-comprehensions (mejores comprehensions)
+    "SIM", # flake8-simplify (simplificaciones)
+]
+
+# Reglas ignoradas (con justificación)
+ignore = [
+    "D100",  # Missing docstring in public module - OK para archivos educativos
+    "D104",  # Missing docstring in public package - OK para __init__.py simples
+    "D203",  # 1 blank line required before class docstring - conflicto con D211
+    "D213",  # Multi-line docstring summary should start at the second line - conflicto con D212
+]
+
+# Archivos a excluir del análisis
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.egg-info",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.per-file-ignores]
+# Los tests no necesitan docstrings tan estrictos
+"tests/**/*.py" = ["D"]
+
+[tool.ruff.pydocstyle]
+# Usar convención de Google para docstrings (más legible que numpy o sphinx)
+convention = "google"
+
+# =============================================================================
+# CONFIGURACIÓN DE MYPY - Type Checking Estático
+# =============================================================================
+# Mypy revisa que los tipos de datos sean correctos antes de ejecutar el código
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true           # Avisar si una función devuelve 'Any'
+warn_unused_configs = true       # Avisar si hay configuraciones sin usar
+disallow_untyped_defs = false    # Permitir funciones sin tipos (código educativo)
+disallow_incomplete_defs = true  # No permitir funciones con tipos incompletos
+check_untyped_defs = true        # Revisar funciones aunque no tengan tipos
+warn_redundant_casts = true      # Avisar sobre conversiones innecesarias
+
+# Ser más permisivo con código educativo
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+# =============================================================================
+# CONFIGURACIÓN DE PYTEST - Framework de Testing
+# =============================================================================
+# Pytest ejecuta y verifica que nuestros tests funcionen correctamente
+
+[tool.pytest.ini_options]
+# Dónde buscar los tests
+testpaths = ["tests"]
+
+# Opciones de pytest
+addopts = [
+    "-v",                    # Verbose: mostrar más información
+    "--strict-markers",      # Requerir que los markers estén registrados
+    "--tb=short",            # Mostrar tracebacks cortos
+    "--cov=src/redes",       # Medir cobertura del código en src/redes
+    "--cov-report=term-missing",  # Mostrar líneas no cubiertas
+    "--cov-report=html",     # Generar reporte HTML de cobertura
+]
+
+# Markers personalizados para tests
+markers = [
+    "slow: tests que tardan más de 1 segundo",
+    "network: tests que requieren conexión de red",
+    "integration: tests de integración",
+]
+
+# =============================================================================
+# CONFIGURACIÓN DE COVERAGE - Medición de Cobertura
+# =============================================================================
+
+[tool.coverage.run]
+source = ["src"]           # Medir cobertura solo en src/
+omit = [
+    "*/tests/*",           # No medir tests
+    "*/__init__.py",       # No medir archivos __init__
+]
+
+[tool.coverage.report]
+# Requerir al menos 70% de cobertura (para código educativo)
+# En producción sería 80-90%
+fail_under = 70
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+# =============================================================================
+# CONFIGURACIÓN DE COMMITIZEN - Commits Convencionales
+# =============================================================================
 
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.0"
 tag_format = "v$version"
 update_changelog_on_bump = true
-
+version_files = [
+    "pyproject.toml:version"
+]

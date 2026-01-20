@@ -1,21 +1,135 @@
+# =============================================================================
+# PRE-COMMIT HOOKS - Guardianes Automáticos de Calidad
+# =============================================================================
+# Este archivo configura revisiones automáticas que se ejecutan ANTES de cada commit.
+# Es como tener un revisor automático que revisa tu código instantáneamente.
+#
+# ¿Qué es un "hook"? Una verificación específica (formato, errores, seguridad, etc.)
+#
+# Instalación:
+#   pip install pre-commit
+#   pre-commit install
+#
+# Uso:
+#   git commit → Los hooks se ejecutan automáticamente
+#   pre-commit run --all-files → Ejecutar manualmente en todos los archivos
+
+# ============================================
+# CONFIGURACIÓN GENERAL
+# ============================================
+
+# Fallar rápido: si un hook falla, no ejecutar los siguientes
+fail_fast: false
+
+# Repositorios de hooks (cada uno tiene diferentes revisores)
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
+  # ============================================
+  # HOOKS BÁSICOS DE PRE-COMMIT
+  # ============================================
+  # Estos son revisores generales que funcionan para cualquier tipo de archivo
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
     hooks:
-      - id: black
-        types: [python]
+      # Elimina espacios en blanco al final de las líneas
+      # ¿Por qué? Mejora legibilidad y evita cambios innecesarios en Git
+      - id: trailing-whitespace
+        name: "🧹 Limpiar espacios en blanco finales"
+
+      # Asegura que los archivos terminen con una línea vacía
+      # ¿Por qué? Estándar de POSIX, evita problemas en algunos editores
+      - id: end-of-file-fixer
+        name: "📝 Agregar línea final a archivos"
+
+      # Verifica que los archivos YAML sean válidos
+      - id: check-yaml
+        name: "✅ Validar archivos YAML"
+        exclude: ^mkdocs\.yml$  # Excluir mkdocs.yml si usa sintaxis especial
+
+      # Verifica que los archivos JSON sean válidos
+      - id: check-json
+        name: "✅ Validar archivos JSON"
+
+      # Detecta archivos grandes que no deberían estar en Git
+      # (>500KB por defecto)
+      - id: check-added-large-files
+        name: "🚨 Detectar archivos grandes"
+        args: ['--maxkb=1000']  # Límite: 1MB
+
+      # Detecta merge conflict markers que quedaron sin resolver
+      - id: check-merge-conflict
+        name: "⚠️  Detectar conflictos de merge sin resolver"
+
+  # ============================================
+  # RUFF - Linter y Formateador Moderno
+  # ============================================
+  # Ruff reemplaza a: flake8, isort, black, pylint, etc.
+  # Es MUCHO más rápido (escrito en Rust)
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.7.0
+    rev: v0.1.9
     hooks:
+      # Ruff como linter (detecta errores)
       - id: ruff
-        args: ["--fix"]
+        name: "🔍 Ruff: Análisis de código"
+        args:
+          - --fix              # Intentar arreglar automáticamente
+          - --exit-non-zero-on-fix  # Fallar si hizo cambios (para que veas qué cambió)
         types: [python]
 
+      # Ruff como formateador (reemplaza a Black)
+      - id: ruff-format
+        name: "🎨 Ruff: Formateo de código"
+        types: [python]
 
-  # - repo: https://github.com/commitizen-tools/commitizen
-  #   rev: v3.27.0   # ajusta a la última estable
-  #   hooks:
-  #     - id: commitizen
-  #       stages: [commit-msg]
+# ============================================
+  # MYPY - Type Checking Estático
+  # ============================================
+  # Mypy verifica que los tipos de datos sean correctos
 
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        name: "🔬 Mypy: Verificación de tipos"
+        additional_dependencies:
+          - types-requests
+          - types-setuptools
+        args:
+          - --ignore-missing-imports
+          - --no-strict-optional
+        exclude: ^tests/
+  # ============================================
+  # BANDIT - Detector de Vulnerabilidades
+  # ============================================
+  # Busca problemas de seguridad en el código Python
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.6
+    hooks:
+      - id: bandit
+        name: "🛡️  Bandit: Análisis de seguridad"
+        args:
+          - -ll  # Solo reportar problemas de severidad media-alta
+          - --skip=B101  # Ignorar asserts (OK en código educativo)
+        exclude: ^tests/  # Los tests pueden tener código "inseguro" a propósito
+
+# ============================================
+# NOTAS IMPORTANTES
+# ============================================
+#
+# 1. Instalación inicial:
+#    $ pre-commit install
+#
+# 2. Ejecutar manualmente en todos los archivos:
+#    $ pre-commit run --all-files
+#
+# 3. Actualizar hooks a versiones más recientes:
+#    $ pre-commit autoupdate
+#
+# 4. Si un hook falla y estás seguro de que está bien:
+#    $ git commit --no-verify
+#    (Pero úsalo con cuidado - los hooks existen por algo)
+#
+# 5. Los hooks solo se ejecutan en archivos que están en "staging"
+#    (es decir, archivos que agregaste con 'git add')
