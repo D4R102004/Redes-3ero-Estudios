@@ -1,0 +1,101 @@
+# =============================================================================
+# CONFIGURACIÓN DE MKDOCS - Sistema de Documentación
+# =============================================================================
+# MkDocs genera un sitio web estático desde archivos Markdown
+
+# Información del sitio
+site_name: Redes de Computadoras - Curso 2025
+site_description: Curso completo de Redes desde cero con enfoque práctico
+site_author: Tu Nombre
+site_url: https://tu-usuario.github.io/Redes-3ero-Estudios
+
+# Repositorio
+repo_name: tu-usuario/Redes-3ero-Estudios
+repo_url: https://github.com/tu-usuario/Redes-3ero-Estudios
+edit_uri: edit/main/docs/
+
+# Tema
+theme:
+  name: material
+  language: es
+  palette:
+    # Modo claro
+    - scheme: default
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Cambiar a modo oscuro
+    # Modo oscuro
+    - scheme: slate
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Cambiar a modo claro
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+# Extensiones de Markdown
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+
+# Navegación
+nav:
+  - Inicio: index.md
+  - Roadmap: roadmap.md
+  - Módulos:
+      - modulos/README.md
+      - Módulo 00 - Fundamentos: modulos/00_fundamentos/
+      - Módulo 01 - Capa Física: modulos/01_capa_fisica/
+      - Módulo 02 - Capa de Enlace: modulos/02_capa_enlace/
+      - Módulo 03 - Capa de Red: modulos/03_capa_red/
+      - Módulo 04 - Capa de Transporte: modulos/04_capa_transporte/
+      - Módulo 05 - Enrutamiento: modulos/05_enrutamiento/
+      - Módulo 06 - Capa de Aplicación: modulos/06_capa_aplicacion/
+  - Recursos:
+      - recursos/README.md
+  - Exámenes:
+      - examenes/README.md
+
+# Plugins
+plugins:
+  - search:
+      lang: es
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+
+# CSS y JS extras (opcional)
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+# Extras
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/tu-usuario
