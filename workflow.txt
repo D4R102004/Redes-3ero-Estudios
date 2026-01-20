@@ -1,0 +1,19 @@
+# 🚀 PASO 4: Workflow Recomendado
+
+### Para cada issue, harás esto:
+
+1. **Crear nuevo chat** en claude.ai
+2. **Título del chat:** "Issue #X: [Nombre del Issue]"
+3. **Primer mensaje:**
+```
+   Voy a trabajar en el Issue #X de mi proyecto de Redes.
+
+   El proyecto está en ~/Escuela/redes_2025/Redes-3ero-Estudios
+
+   El issue completo está documentado en docs/ISSUES_COMPLETOS.md
+
+   Por favor, lee ese archivo y ayúdame a completar el Issue #X paso a paso.
+
+Claude leerá el archivo con project_knowledge_search
+Trabajarás hasta completar todas las tareas
+Cerrarás el issue en GitHub cuando termines
