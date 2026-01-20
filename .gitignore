@@ -1,4 +1,221 @@
+# =============================================================================
+# .gitignore - Archivos que Git NO debe rastrear
+# =============================================================================
+# Este archivo le dice a Git qué archivos/carpetas debe ignorar.
+# ¿Por qué? Porque algunos archivos son temporales, personales o generados.
+
+# ============================================
+# PYTHON
+# ============================================
+
+# Caché de bytecode compilado
+# (Python compila .py a .pyc para ejecutar más rápido)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribuciones / builds
+# (Archivos generados al empaquetar el proyecto)
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.dist-info/
+
+# PyInstaller
+# (Herramienta para convertir Python en ejecutable)
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+# (Reportes de tests y cobertura de código)
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Entornos virtuales
+# (Carpetas con las dependencias instaladas)
+venv/
+ENV/
+env/
+.venv
 .venv/
+
+# mypy
+# (Caché del type checker)
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# ============================================
+# EDITORES E IDEs
+# ============================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope (refactoring tool)
+.ropeproject
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.directory
+*~
+
+# ============================================
+# PROYECTO ESPECÍFICO
+# ============================================
+
+# Notas personales
+notas/personal/
+*.draft
+
+# Datos temporales
+tmp/
+temp/
+*.tmp
+
+# Logs
+*.log
+logs/
+
+# Archivos de configuración local
+.env
+.env.local
+.env.*.local
+local_config.yaml
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# ============================================
+# DOCUMENTACIÓN
+# ============================================
+
+# MkDocs build
+site/
+
+# Sphinx documentation
+docs/_build/
+
+# ============================================
+# HERRAMIENTAS DE DESARROLLO
+# ============================================
+
+# pre-commit
+.pre-commit-config.yaml.backup
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# ============================================
+# OTROS
+# ============================================
+
+# Archivos de respaldo
+*.bak
+*.backup
+*.old
+
+# Archivos comprimidos (a menos que sean releases oficiales)
+*.zip
+*.tar.gz
+*.rar
+
+# Carpeta de descargas temporales
+downloads/.venv/
 __pycache__/
 *.pyc
-

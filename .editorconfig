@@ -1,0 +1,68 @@
+# =============================================================================
+# EDITORCONFIG - Configuración Universal de Editores
+# =============================================================================
+# Este archivo asegura que diferentes editores (VSCode, PyCharm, Vim, etc.)
+# usen la misma configuración de formato.
+#
+# ¿Por qué? Para evitar conflictos como:
+# - Alguien usa tabs, otro espacios → archivos inconsistentes
+# - Diferentes encodings → caracteres raros
+#
+# Más info: https://editorconfig.org/
+
+# Esta es la raíz del proyecto (no buscar .editorconfig en carpetas superiores)
+root = true
+
+# ============================================
+# CONFIGURACIÓN PARA TODOS LOS ARCHIVOS
+# ============================================
+[*]
+charset = utf-8                    # Usar UTF-8 siempre
+end_of_line = lf                   # Usar LF (Unix) en vez de CRLF (Windows)
+insert_final_newline = true        # Agregar línea vacía al final
+trim_trailing_whitespace = true    # Eliminar espacios al final de líneas
+indent_style = space               # Usar espacios (no tabs)
+
+# ============================================
+# PYTHON
+# ============================================
+[*.py]
+indent_size = 4                    # 4 espacios por nivel (PEP 8)
+max_line_length = 88               # Mismo que Black y Ruff
+
+# ============================================
+# YAML
+# ============================================
+[*.{yml,yaml}]
+indent_size = 2                    # 2 espacios para YAML
+
+# ============================================
+# JSON
+# ============================================
+[*.json]
+indent_size = 2                    # 2 espacios para JSON
+
+# ============================================
+# MARKDOWN
+# ============================================
+[*.md]
+trim_trailing_whitespace = false   # En Markdown los espacios finales importan
+max_line_length = 100              # Líneas un poco más largas para documentación
+
+# ============================================
+# CONFIGURACIÓN
+# ============================================
+[*.{toml,ini,cfg}]
+indent_size = 4
+
+# ============================================
+# SHELL SCRIPTS
+# ============================================
+[*.sh]
+indent_size = 2
+
+# ============================================
+# MAKEFILES (requieren tabs)
+# ============================================
+[Makefile]
+indent_style = tab
